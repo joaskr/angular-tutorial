@@ -7,15 +7,21 @@ import {Subject} from "rxjs";
 @Injectable()
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
-  private recipes: Recipe[] = [
-    new Recipe(
-      'Test Recipe',
-      'This is a test',
-      'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2018/12/Shakshuka-19.jpg', [new Ingredient('meat', 1), new Ingredient('fries', 20)]
-    ),
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe(
+  //     'Test Recipe',
+  //     'This is a test',
+  //     'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2018/12/Shakshuka-19.jpg', [new Ingredient('meat', 1), new Ingredient('fries', 20)]
+  //   ),
+  // ];
+  private recipes: Recipe[] = [];
   constructor(private shoppingListService: ShoppingListService) {
   }
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
   getRecipes() {
     return this.recipes.slice();
   }
